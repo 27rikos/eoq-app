@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ProductImport;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProdukController extends Controller
 {
@@ -12,7 +14,8 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        return view('admin.produk.index');
+        $data = Product::all();
+        return view('admin.produk.index', compact('data'));
     }
 
     /**
@@ -28,7 +31,16 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'kode_produk' => 'required',
+            'produk' => 'required',
+            'jumlah' => 'required',
+            'satuan' => 'required',
+            'harga' => 'required',
+        ]);
+        $data = Product::create($request->all());
+        $data->save();
+        return redirect()->route('produk.index')->with('success', 'Produk Ditambahkan');
     }
 
     /**
@@ -42,24 +54,36 @@ class ProdukController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        $data = Product::findOrFail($id);
+        return view('admin.produk.edit', compact('data'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
-        //
+        $data = Product::findOrFail($id);
+        $data->update($request->all());
+        $data->save();
+        return redirect()->route('produk.index')->with('success', 'Data Diubah');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $data = Product::findOrFail($id);
+        $data->delete();
+        return redirect()->route('produk.index')->with('success', 'Data Dihapus');
+    }
+
+    public function import(Request $request)
+    {
+        Excel::import(new ProductImport, $request->file);
+        return back();
     }
 }

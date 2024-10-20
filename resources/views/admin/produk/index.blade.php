@@ -14,13 +14,14 @@
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Import Produk</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form action="#" method="post">
+                        <form action="{{ route('import') }}" method="post" enctype="multipart/form-data">
+                            @csrf
                             <div class="modal-body">
                                 <input type="file" class="form-control" name="file" accept=".xlsx,.xls,.csv">
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Import</button>
+                                <button type="submit" class="btn btn-primary">Import</button>
                             </div>
                         </form>
                     </div>
@@ -40,14 +41,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Tiger</td>
-                        <td>Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                    </tr>
+                    @foreach ($data as $item)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->kode_produk }}</td>
+                            <td>{{ $item->produk }}</td>
+                            <td>{{ $item->satuan }}</td>
+                            <td>{{ $item->harga }}</td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <a href="{{ route('produk.edit', $item->id) }}" class="btn btn-primary">Edit</a>
+                                    <form action="{{ route('produk.destroy', $item->id) }}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                        <button class="btn btn-danger" type="submit">Hapus</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

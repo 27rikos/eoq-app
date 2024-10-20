@@ -23,17 +23,20 @@
                                 <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
                                     <h4>EOQAPP <i class="ti ti-building-warehouse fs-8 text-success"></i></h4>
                                 </a>
-                                <form>
+                                <form action="{{ route('auth') }}" method="POST">
+                                    @csrf
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Username</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail1"
-                                            aria-describedby="emailHelp">
+                                        <input type="email" name="email" class="form-control"
+                                            id="exampleInputEmail1" aria-describedby="emailHelp">
                                     </div>
                                     <div class="mb-4">
                                         <label for="exampleInputPassword1" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword1">
+                                        <input type="password" name="password" class="form-control"
+                                            id="exampleInputPassword1">
                                     </div>
-                                    <button class="btn btn-primary w-100 fs-4 mb-4 rounded-2">Sign In</button>
+                                    <button class="btn btn-primary w-100 fs-4 mb-4 rounded-2" type="submit">Sign
+                                        In</button>
                                 </form>
                             </div>
                         </div>

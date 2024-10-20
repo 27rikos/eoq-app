@@ -7,6 +7,13 @@
     <title>Admin | @yield('title')</title>
     <link rel="shortcut icon" type="image/png" href="{{ asset('../assets/images/logos/favicon.png') }}" />
     <link rel="stylesheet" href="{{ asset('../assets/css/styles.min.css') }}" />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.0/js/dataTables.responsive.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.0/js/responsive.bootstrap5.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/3.0.0/css/responsive.bootstrap5.css">
 </head>
 
 <body>
@@ -64,7 +71,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link sidebar-link success-hover-bg" href="./ui-card.html"
+                            <a class="sidebar-link sidebar-link success-hover-bg" href="{{ route('eoq.index') }}"
                                 aria-expanded="false">
                                 <span class="aside-icon p-2 bg-light-primary rounded-3">
                                     <i class="ti ti-math-symbols fs-7 text-primary"></i>
@@ -73,7 +80,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link sidebar-link primary-hover-bg" href="./ui-forms.html"
+                            <a class="sidebar-link sidebar-link primary-hover-bg" href="{{ route('report.index') }}"
                                 aria-expanded="false">
                                 <span class="aside-icon p-2 bg-light-info rounded-3">
                                     <i class="ti ti-report fs-7 text-info"></i>
@@ -117,7 +124,7 @@
                                             <i class="ti ti-user fs-6"></i>
                                             <p class="mb-0 fs-3">My Profile</p>
                                         </a>
-                                        <a href="./authentication-login.html"
+                                        <a href="{{ route('logout') }}"
                                             class="btn btn-outline-primary mx-3 mt-2 d-block shadow-none">Logout</a>
                                     </div>
                                 </div>
@@ -146,6 +153,14 @@
     <script src="{{ asset('../assets/libs/apexcharts/dist/apexcharts.min.js') }}"></script>
     <script src="{{ asset('../assets/libs/simplebar/dist/simplebar.js') }}"></script>
     <script src=".{{ asset('./assets/js/dashboard.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            new DataTable('#example', {
+                responsive: true,
+                scrollX: true
+            });
+        })
+    </script>
 </body>
 
 </html>
